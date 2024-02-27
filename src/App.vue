@@ -3,16 +3,7 @@
     <v-main>
       <router-view/>
       <SnackBar/>
-      <v-footer app>
-        <v-row>
-          <v-col>
-            <v-col class="text-center mt-4 flex-row-center justify-center" cols="12">
-              <v-icon class="mr-2">mdi-copyright</v-icon>
-              {{ new Date().getFullYear() }} &nbsp; {{ "|" }} &nbsp;Funly Family
-            </v-col>
-          </v-col>
-        </v-row>
-      </v-footer>
+      <AppFooter/>
     </v-main>
   </v-app>
 </template>
@@ -22,6 +13,7 @@ import { consoleWarning } from "@/utils/logger";
 import { onMounted } from "vue";
 import { useAuthStore } from "@/store/authStore";
 import SnackBar from "@/components/common/SnackBar.vue";
+import AppFooter from "@/components/app/AppFooter.vue";
 
 const authStore = useAuthStore();
 
@@ -36,3 +28,10 @@ const fetchInitialData = async () => {
 }
 onMounted(fetchInitialData)
 </script>
+
+<style>
+@font-face {
+  font-family: 'CandaTawa';
+  src: local('CandaTawa'), url('~@/assets/fonts/Canda-Tawa-Regular.ttf') format('truetype');
+}
+</style>

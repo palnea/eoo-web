@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
-import AppLogo from "@/components/AppLogo.vue";
+import AppLogo from "@/components/app/AppLogo.vue";
 import apiService from "@/services/api.service";
 import { consoleError } from "@/utils/logger";
 import { gradeOptions } from "@/constants/grades";
@@ -92,7 +92,7 @@ watchEffect(() => {
   <v-container style="width: 500px;">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
-      <p class="text-h5" style="text-align: center; margin: 10px">Yeni Kullanıcı Kayıt Ekranı</p>
+      <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat;">Yeni Kullanıcı Kayıt Ekranı</p>
     </v-row>
 
     <v-form @submit.prevent="listClasses" v-model="isFormValid">

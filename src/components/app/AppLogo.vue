@@ -1,5 +1,5 @@
 <template>
-  <img src="../assets/logo-white-bg.png" alt="logo" :width="computedWidth"/>
+  <img src="../../assets/logo-white-bg.png" alt="logo" :width="computedWidth"/>
 </template>
 
 <style scoped>

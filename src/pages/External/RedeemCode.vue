@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from "vue";
-import AppLogo from "@/components/AppLogo.vue";
+import AppLogo from "@/components/app/AppLogo.vue";
 import { phoneCountryCodes } from "@/constants/countryCodes";
 import apiService from "@/services/api.service";
 import { filterNullValues, mapClassOptions } from "@/utils/common";
@@ -86,7 +86,7 @@ watch(tab, () => {
   <v-container style="width: 500px;">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
-      <p class="text-h5" style="text-align: center; margin: 10px">Kayıtlı Kullanıcı için Kod Kullanma</p>
+      <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat">Kayıtlı Kullanıcı için Kod Kullanma</p>
     </v-row>
     <v-form @submit.prevent="listClasses" v-model="isFormValid">
       <v-text-field v-model="refCodeForm.reference_code" label="Referans Kodu" :rules="requiredRule"

@@ -1,6 +1,6 @@
 <script setup>
 
-import AppLogo from "@/components/AppLogo.vue";
+import AppLogo from "@/components/app/AppLogo.vue";
 import router from "@/router";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
 </script>
