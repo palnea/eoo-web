@@ -46,12 +46,11 @@ const router = createRouter({
       path: '/success',
       component: ExternalSuccess,
       props: (route) => ({
-        title: route.query.title || 'Hesabınız Başarıyla Oluşturuldu.',
-        caption: route.query.caption || "Artık Funly Family dünyasına girmeye hazırsınız. \n Aşağıdaki  bağlantıya tıklayarak ya da QR kodunu okutarak Funly Family'i indirin ve oluşturduğunuz hesapla giriş yapın."
+        title: route.query.title || 'İşlem Başarılı.',
+        caption: route.query.caption || "Artık Funly Family dünyasına girmeye hazırsınız. \n Aşağıdaki  bağlantıya tıklayarak ya da QR kodunu okutarak Funly Family'i indirin ve hesabınızla giriş yapın."
       }),
       beforeEnter: (to, from, next) => {
         // Check if the route was pushed from another route
-        next()
         if (from.name) {
           next();
         } else {

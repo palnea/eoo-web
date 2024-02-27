@@ -35,6 +35,7 @@ const classIdRules = ref([])
 const schoolNameRules = ref([])
 const gradeRules = ref([])
 const loading = ref(false)
+const showPsw = ref(false)
 
 const register = async () => {
   try {
@@ -74,7 +75,12 @@ const listClasses = async () => {
   }
 }
 
-const uppercase = () => {
+const togglePasswordVisibility = () => {
+  showPsw.value = !showPsw.value;
+}
+
+const
+uppercase = () => {
   refCodeForm.value.reference_code = refCodeForm.value.reference_code.toUpperCase()
 }
 
@@ -87,12 +93,13 @@ watchEffect(() => {
 </script>
 
 <template>
-  <v-snackbar v-model="snackbar" color="#F5C461" timeout="3000" style="color: blue">{{message}}</v-snackbar>
+  <v-snackbar v-model="snackbar" color="#F5C461" timeout="3000" style="color: blue">{{ message }}</v-snackbar>
   <BackgroundArt/>
   <v-container style="width: 500px;">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
-      <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat;">Yeni Kullanıcı Kayıt Ekranı</p>
+      <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat;">
+        Yeni Kullanıcı Kayıt Ekranı</p>
     </v-row>
 
     <v-form @submit.prevent="listClasses" v-model="isFormValid">
@@ -120,7 +127,9 @@ watchEffect(() => {
           <v-text-field v-model="form.phone" label="Telefon" :rules="requiredRule"></v-text-field>
         </v-col>
       </v-row>
-      <v-text-field v-model="form.password" label="Şifre" type="password" :rules="requiredRule"></v-text-field>
+      <v-text-field v-model="form.password" label="Şifre" :type="showPsw ? 'text' : 'password'" :rules="requiredRule"
+                    :append-icon="showPsw ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="togglePasswordVisibility"></v-text-field>
       <v-select
         v-if="isRefCodeLinkedToSchool"
         v-model="form.class_id"
