@@ -12,5 +12,5 @@ img {
 import { computed } from 'vue';
 
 const props = defineProps(['width']);
-const computedWidth = computed(() => props.width || 300);
+const computedWidth = computed(() => props.width || 250);
 </script>
