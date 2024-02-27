@@ -8,6 +8,7 @@ import { emailRules, requiredRule } from "@/utils/formValidationRules";
 import { filterNullValues, mapClassOptions, } from "@/utils/common";
 import router from "@/router";
 import { phoneCountryCodes } from "@/constants/countryCodes";
+import BackgroundArt from "@/components/common/BackgroundArt.vue";
 
 const message = ref("")
 const snackbar = ref(false)
@@ -87,7 +88,7 @@ watchEffect(() => {
 
 <template>
   <v-snackbar v-model="snackbar" color="#F5C461" timeout="3000" style="color: blue">{{message}}</v-snackbar>
-  <div class="background-container"/>
+  <BackgroundArt/>
   <v-container style="width: 500px;">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
@@ -150,15 +151,4 @@ watchEffect(() => {
 </template>
 
 <style scoped>
-.background-container {
-  height: 100vh;
-  width: 1920px;
-  background-image: url('../../assets/cute-doodles.jpg');
-  background-size: auto 100%;
-  background-position: center;
-  position: absolute;
-  opacity: 0.06;
-  background-repeat: repeat-x;
-  aspect-ratio: initial;
-}
 </style>
