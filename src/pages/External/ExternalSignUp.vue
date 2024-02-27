@@ -47,7 +47,12 @@ const register = async () => {
     await router.push('success')
   } catch (err) {
     consoleError('Failed to register user: ', err)
-    message.value = err.response.data.response_code
+    const responseCode = err.response.data.response_code
+    if (responseCode === 'ERR_DUPLICATE_KEY_ERROR') {
+      message.value = 'Bu e-posta ya da telefon ile daha önceden oluşturulmuş bir hesap mevcut.'
+    } else {
+      message.value = err.response.data.response_code
+    }
     snackbar.value = true
   } finally {
     // revert phone to original value
@@ -80,9 +85,9 @@ const togglePasswordVisibility = () => {
 }
 
 const
-uppercase = () => {
-  refCodeForm.value.reference_code = refCodeForm.value.reference_code.toUpperCase()
-}
+  uppercase = () => {
+    refCodeForm.value.reference_code = refCodeForm.value.reference_code.toUpperCase()
+  }
 
 watchEffect(() => {
   classIdRules.value = isRefCodeLinkedToSchool.value ? requiredRule : []
@@ -93,7 +98,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <v-snackbar v-model="snackbar" color="#F5C461" timeout="3000" style="color: blue">{{ message }}</v-snackbar>
+  <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{ message }}</v-snackbar>
   <BackgroundArt/>
   <v-container style="width: 500px;">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">

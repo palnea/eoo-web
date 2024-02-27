@@ -81,7 +81,7 @@ watch(tab, () => {
 </script>
 
 <template>
-  <v-snackbar v-model="snackbar" color="#F5C461" timeout="3000" style="color: blue">{{message}}</v-snackbar>
+  <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{message}}</v-snackbar>
   <BackgroundArt/>
   <v-container style="width: 500px;">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
