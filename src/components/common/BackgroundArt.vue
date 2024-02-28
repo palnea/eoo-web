@@ -9,7 +9,7 @@
 <style scoped>
 .background-container {
   height: 100vh;
-  width: 1920px;
+  width: 100vw;
   background-image: url('../../assets/cute-doodles.jpg');
   background-size: auto 100%;
   background-position: center;

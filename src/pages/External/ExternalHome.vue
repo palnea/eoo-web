@@ -7,7 +7,7 @@ import BackgroundArt from "@/components/common/BackgroundArt.vue";
 
 <template>
   <BackgroundArt/>
-  <v-container style="width: 500px; display: flex; flex-direction: column; align-items: center">
+  <v-container style="width: 90%; display: flex; flex-direction: column; align-items: center">
     <AppLogo/>
     <v-col cols="auto" style="margin-top: 50px">
 <!--      <v-btn @click="() => router.push('external-signup')" size="large" variant="elevated" color="blue" class="no-uppercase">Üyelik Oluştur</v-btn>-->

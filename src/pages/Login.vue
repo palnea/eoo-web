@@ -36,7 +36,7 @@ const loginAttempt = async () => {
 
 <template>
   <BackgroundArt/>
-  <v-container class="flex-col-center justify-center" style="width: 500px; height: 80vh">
+  <v-container class="flex-col-center justify-center" style="width: 90%; height: 80vh">
     <div style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
       <p class="font-weight-medium"
