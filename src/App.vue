@@ -30,8 +30,4 @@ onMounted(fetchInitialData)
 </script>
 
 <style>
-@font-face {
-  font-family: 'CandaTawa';
-  src: local('CandaTawa'), url('~@/assets/fonts/Canda-Tawa-Regular.ttf') format('truetype');
-}
 </style>
