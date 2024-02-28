@@ -22,8 +22,9 @@ const loginAttempt = async () => {
       password: formState.password
     };
     const response = await apiService.login(payload)
-    const responseBody = response.data.response_body.user.role
-    if (responseBody === 'admin') {
+    const responseBody = response.data.response_body
+    const userRole = responseBody.user.role
+    if (userRole === 'student') {
       authStore.login(responseBody)
       await router.push('dashboard')
     }

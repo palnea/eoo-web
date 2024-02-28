@@ -83,7 +83,7 @@ watch(tab, () => {
 <template>
   <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{message}}</v-snackbar>
   <BackgroundArt/>
-  <v-container style="width: 90%;">
+  <v-container style="width: 90%;max-width: 400px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
       <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat">Kayıtlı Kullanıcı için Kod Kullanma</p>

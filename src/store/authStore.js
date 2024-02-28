@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('user', {
     },
     login(loginResponse) {
 
-      if (loginResponse) {
+      if (loginResponse.user) {
         this.user = loginResponse.user
       }
       setAccessToken(loginResponse.access)

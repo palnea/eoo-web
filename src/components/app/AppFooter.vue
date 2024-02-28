@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <v-footer app>
+  <v-footer app style="background-color: transparent; bottom: -15px">
     <v-row>
       <v-col>
         <v-col class="text-center mt-4 flex-row-center justify-center custom-font  font-weight-thin" cols="12">
