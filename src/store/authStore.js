@@ -33,9 +33,8 @@ export const useAuthStore = defineStore('user', {
     },
     login(loginResponse) {
 
-      if (true) {
-        this.user = {
-        }
+      if (loginResponse) {
+        this.user = loginResponse.user
       }
       setAccessToken(loginResponse.access)
       setRefreshToken(loginResponse.refresh)

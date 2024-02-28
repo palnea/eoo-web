@@ -23,24 +23,15 @@ const router = createRouter({
     },
     {
       path: '/redeem-code',
-      component: RedeemCode,
-      meta: {
-        requiresAuth: false
-      }
+      component: RedeemCode
     },
     {
       path: '/external-signup',
-      component: ExternalSignUp,
-      meta: {
-        requiresAuth: false
-      }
+      component: ExternalSignUp
     },
     {
       path: '/external-home',
-      component: ExternalHome,
-      meta: {
-        requiresAuth: false
-      }
+      component: ExternalHome
     },
     {
       path: '/success',
@@ -60,41 +51,38 @@ const router = createRouter({
     },
     {
       path: '/login',
-      component: Login,
-      meta: {
-        requiresAuth: false
-      }
+      component: Login
     },
     {
       path: '/dashboard',
       component: Dashboard,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     {
       path: '/story',
       component: Story,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
     },
     { path: '/:pathMatch(.*)*', component: NotFound }
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.requiresAuth) {
-//     const token = false
-//     if (token) {
-//       next();
-//     } else {
-//       next('/external-signup');
-//     }
-//   } else {
-//     // Non-protected route, allow access
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const token = true
+    if (token) {
+      next();
+    } else {
+      next('/external-home');
+    }
+  } else {
+    // Non-protected route, allow access
+    next();
+  }
+});
 
 export default router
