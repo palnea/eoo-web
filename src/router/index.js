@@ -15,10 +15,13 @@ import ExternalSuccess from "@/pages/External/ExternalSuccess.vue";
 import RedeemCode from "@/pages/External/RedeemCode.vue";
 import Users from "@/pages/Users.vue";
 import Admin from "@/layouts/Admin.vue";
+import School from "@/pages/School.vue";
+import CreateReferenceCode from "@/pages/CreateReferenceCode.vue";
+import ListReferenceCode from "@/pages/ListReferenceCode.vue";
 
 const adminRoutes = [
   {
-    path: 'dashboard',
+    path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
     meta: {
@@ -26,7 +29,7 @@ const adminRoutes = [
     }
   },
   {
-    path: 'users',
+    path: '/users',
     name: 'users',
     component: Users,
     meta: {
@@ -34,7 +37,7 @@ const adminRoutes = [
     }
   },
   {
-    path: 'story',
+    path: '/story',
     name: 'story',
     component: Story,
     meta: {
@@ -44,15 +47,15 @@ const adminRoutes = [
   {
     path: '/school',
     name: 'school',
-    component: Story,
+    component: School,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: '/reference-code',
-    name: 'reference-code',
-    component: Story,
+    path: '/ref-code',
+    name: 'ref-code',
+    component: ListReferenceCode,
     meta: {
       requiresAuth: true
     }

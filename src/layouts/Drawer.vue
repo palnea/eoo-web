@@ -1,13 +1,13 @@
 <template>
   <v-app>
-    <v-navigation-drawer app class="bg-deep-purple" expand-on-hover rail permanent width="300px">
+    <v-navigation-drawer app class="bright-purple-gradient" expand-on-hover rail permanent width="300px">
       <v-list dense >
         <div v-for="menuItem in menuItems" :key="menuItem.title">
           <!-- If it's a group -->
           <v-list-group v-if="menuItem.children" :value="menuItem.title" style="padding-right: 0">
             <template v-slot:activator="{ props }">
-              <v-list-item :prepend-icon="menuItem.icon" v-bind="props">
-                <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+              <v-list-item :prepend-icon="menuItem.icon" v-bind="props" class="white--text">
+                <v-list-item-title class="white--text">{{ menuItem.title }}</v-list-item-title>
               </v-list-item>
             </template>
             <v-list-item v-for="child in menuItem.children" :key="child.title" :to="child.to"
@@ -18,7 +18,7 @@
           </v-list-group>
           <!-- If it's not a group -->
           <v-list-item v-else :to="menuItem.to" :prepend-icon="menuItem.icon">
-            <v-list-item-title>{{ menuItem.title }}</v-list-item-title>
+            <v-list-item-title class="white--text">{{ menuItem.title }}</v-list-item-title>
 
           </v-list-item>
         </div>
@@ -43,23 +43,29 @@
 import { ref } from 'vue';
 
 const menuItems = ref([
-  { title: 'Ana Sayfa', icon: 'mdi-view-dashboard', to: { name: 'dashboard' } },
+  // { title: 'Ana Sayfa', icon: 'mdi-view-dashboard', to: { name: 'dashboard' } },
   {
-    title: 'Kullanıcılar',
+    title: 'Kullanıcı',
     icon: 'mdi-account-multiple',
     children: [
-      { title: 'Tüm Kullanıcılar', icon: 'mdi-list-box', to: { name: 'users' } },
-      { title: 'Kullanıcı Ekle', icon: 'mdi-account-plus', to: { name: 'external-signup' } },
-      { title: 'Premium Atama', icon: 'mdi-key', to: { name: 'redeem-code' } },
+      // { title: 'Listele', icon: 'mdi-list-box', to: { name: 'users' } },
+      { title: 'Ekle', icon: 'mdi-account-plus', to: { name: 'external-signup' } },
+      { title: 'Premium Ata', icon: 'mdi-account-star', to: { name: 'redeem-code' } },
     ],
   },
+  // {
+  //   title: 'Hikaye',
+  //   icon: 'mdi-book',
+  //   children: [
+  //     { title: 'Listele', icon: 'mdi-list-box', to: { name: 'story' } },
+  //     { title: 'Konular', icon: 'mdi-text-long', to: { name: 'story' } },
+  //   ],
+  // },
   {
-    title: 'Hikaye',
-    icon: 'mdi-book',
-    to: { name: 'users' },
+    title: 'Referans Kodu',
+    icon: 'mdi-ticket',
     children: [
-      { title: 'Hikayeler', icon: 'mdi-book-open', to: { name: 'story' } },
-      { title: 'Tema', icon: 'mdi-palette', to: { name: 'story' } },
+      { title: 'Listele', icon: 'mdi-list-box', to: { name: 'ref-code' } },
     ],
   },
   // { title: 'Etkinlik', icon: 'mdi-calendar-check', to: { name: 'story' } },
@@ -73,6 +79,10 @@ const menuItems = ref([
 
 .v-list-group__items .v-list-item {
   padding-inline-start: 24px !important;
+}
+
+.white--text{
+
 }
 
 </style>

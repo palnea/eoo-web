@@ -4,10 +4,7 @@ import Drawer from "@/layouts/Drawer.vue";
 </script>
 
 <template>
-  <Drawer>
-
-  </Drawer>
-  <div> Dashboard</div>
+  <div> Users</div>
 </template>
 
 <style scoped>

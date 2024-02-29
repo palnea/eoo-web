@@ -34,6 +34,10 @@ class ApiService extends BaseService {
   fetchClassesByRefCode(refCode) {
     return this._axiosInstance.get(`/user/class/?reference_code=${refCode}`)
   }
+
+  fetchRefCodes(){
+    return this._axiosInstance.get('/payment/reference-code/')
+  }
 }
 
 export default new ApiService()
