@@ -16,7 +16,6 @@ import RedeemCode from "@/pages/External/RedeemCode.vue";
 import Users from "@/pages/Users.vue";
 import Admin from "@/layouts/Admin.vue";
 import School from "@/pages/School.vue";
-import CreateReferenceCode from "@/pages/CreateReferenceCode.vue";
 import ListReferenceCode from "@/pages/ListReferenceCode.vue";
 
 const adminRoutes = [
