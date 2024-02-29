@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// import { getAccessToken, refreshToken } from '@/utils/token'u
+import { getAccessToken, refreshToken } from '@/utils/token'
 
 export default class BaseService {
   constructor(baseURL) {
@@ -20,11 +20,11 @@ export default class BaseService {
   }
 
   static requestInterceptor(config) {
-    // const token = getAccessToken()
-    //
-    // if (token && config.headers && !config.public) {
-    //   config.headers.Authorization = `Bearer ${token}`
-    // }
+    const token = getAccessToken()
+
+    if (token && config.headers && !config.public) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
 
     return config
   }
@@ -38,8 +38,8 @@ export default class BaseService {
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      // const accessToken = await refreshToken()
-      // originalRequest.headers.Authorization = 'Bearer ' + accessToken
+      const accessToken = await refreshToken()
+      originalRequest.headers.Authorization = 'Bearer ' + accessToken
       return this._axiosInstance(originalRequest)
     }
     return Promise.reject(error)
