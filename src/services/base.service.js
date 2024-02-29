@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { getAccessToken, refreshToken } from '@/utils/token'
+// import { getAccessToken, refreshToken } from '@/utils/token'u
 
 export default class BaseService {
   constructor(baseURL) {
