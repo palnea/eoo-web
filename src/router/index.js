@@ -65,10 +65,6 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes: [
     {
-      path: '',
-      redirect: '/external-home',
-    },
-    {
       path: '/admin',
       name: 'admin',
       component: Admin,
@@ -85,7 +81,7 @@ const router = createRouter({
       component: ExternalSignUp
     },
     {
-      path: '/external-home',
+      path: '',
       name: 'external-home',
       component: ExternalHome
     },
