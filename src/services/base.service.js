@@ -38,8 +38,8 @@ export default class BaseService {
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      const accessToken = await refreshToken()
-      originalRequest.headers.Authorization = 'Bearer ' + accessToken
+      // const accessToken = await refreshToken()
+      // originalRequest.headers.Authorization = 'Bearer ' + accessToken
       return this._axiosInstance(originalRequest)
     }
     return Promise.reject(error)
