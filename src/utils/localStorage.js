@@ -1,5 +1,5 @@
 const STORAGE_NAME = 'app_storage'
-const _storage = window.localStorage
+const _storage = window.sessionStorage
 const _listeners = {}
 const _data = _storage.getItem(STORAGE_NAME)
   ? JSON.parse(_storage.getItem(STORAGE_NAME))
