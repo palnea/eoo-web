@@ -4,7 +4,7 @@ import AppLogo from "@/components/app/AppLogo.vue";
 import apiService from "@/services/api.service";
 import { consoleError } from "@/utils/logger";
 import { gradeOptions } from "@/constants/grades";
-import { emailRules, requiredRule } from "@/utils/formValidationRules";
+import { eitherFieldRule, emailRules, requiredRule } from "@/utils/formValidationRules";
 import { filterNullValues, mapClassOptions, } from "@/utils/common";
 import router from "@/router";
 import { phoneCountryCodes } from "@/constants/countryCodes";
@@ -40,7 +40,7 @@ const showPsw = ref(false)
 const register = async () => {
   try {
     loading.value = true
-    form.value.phone = countryCode.value + form.value.phone
+    form.value.phone && (form.value.phone = countryCode.value + form.value.phone);
     form.value.verify_password = form.value.password
     const response = await apiService.register(filterNullValues(form.value))
     console.log("register response: ", response.data.response_body)
@@ -100,7 +100,7 @@ watchEffect(() => {
 <template>
   <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{ message }}</v-snackbar>
   <BackgroundArt/>
-  <v-container style="width: 90%; max-width: 400px">
+  <v-container style="width: 90%; max-width: 500px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
       <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat;">
@@ -117,7 +117,7 @@ watchEffect(() => {
     <v-form @submit.prevent="register" v-model="isFormValid" v-if="isRefCodeValid">
       <v-text-field v-model="form.fullname" label="Öğrenci Adı" :rules="requiredRule"></v-text-field>
       <v-text-field v-model="form.parent_fullname" label="Aile Adı Soyadı" :rules="requiredRule"></v-text-field>
-      <v-text-field v-model="form.email" label="E-posta" :rules="emailRules"></v-text-field>
+      <v-text-field v-model="form.email" label="E-posta" :rules="[eitherFieldRule( form.email, form.phone), emailRules].flat()"></v-text-field>
       <v-row>
         <v-col cols="3">
           <v-select
@@ -129,7 +129,7 @@ watchEffect(() => {
           ></v-select>
         </v-col>
         <v-col cols="9">
-          <v-text-field v-model="form.phone" label="Telefon" :rules="requiredRule"></v-text-field>
+          <v-text-field v-model="form.phone" label="Telefon" :rules="eitherFieldRule( form.email, form.phone)"></v-text-field>
         </v-col>
       </v-row>
       <v-text-field v-model="form.password" label="Şifre" :type="showPsw ? 'text' : 'password'" :rules="requiredRule"
