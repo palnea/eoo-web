@@ -95,7 +95,6 @@ const router = createRouter({
       }),
       beforeEnter: (to, from, next) => {
         // Check if the route was pushed from another route
-        next();
         if (from.name) {
           next();
         } else {
