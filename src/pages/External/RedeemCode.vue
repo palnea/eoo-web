@@ -14,6 +14,7 @@ const message = ref("")
 const snackbar = ref(false)
 const tab = ref()
 const classIdRules = ref([])
+const isFormValid = ref(false)
 const isRefCodeValid = ref(false)
 const isRefCodeLinkedToSchool = ref(false) // flag to set school's class dropdown or grade predefined options
 const countryCode = ref(phoneCountryCodes[0].value)
@@ -54,7 +55,7 @@ const redeem = async () => {
       form.value.verify_password = form.value.password
     }
 
-    const response = await apiService.register(filteredForm)
+    const response = await apiService.redeemCode(filteredForm)
     console.log("register response: ", response.data.response_body)
     await router.push('success')
   } catch (err) {
@@ -62,8 +63,8 @@ const redeem = async () => {
     message.value = err.response.data.response_code
     snackbar.value = true
   } finally {
-    // revert phone to original value
-    form.value.phone = form.value.phone.substring(countryCode.value.length);
+    // revert phone to original value -remove country code prefix
+    form.value.phone && (form.value.phone = form.value.phone.substring(countryCode.value.length))
     loading.value = false
   }
 }
@@ -105,7 +106,7 @@ watch(tab, () => {
         <v-tab :value=1>E-posta</v-tab>
         <v-tab :value=2>Telefon</v-tab>
       </v-tabs>
-      <v-text-field v-if="tab === 1" v-model="form.email" label="E-posta" :rules="emailRules"></v-text-field>
+      <v-text-field v-if="tab === 1" v-model="form.email" label="E-posta" :rules="[requiredRule, emailRules].flat()"></v-text-field>
       <v-row v-if="tab === 2">
         <v-col cols="3">
           <v-select

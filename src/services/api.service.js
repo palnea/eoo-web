@@ -30,6 +30,9 @@ class ApiService extends BaseService {
   register(payload) {
     return this._axiosInstance.post('auth/register', payload)
   }
+  redeemCode(payload) {
+    return this._axiosInstance.post('/user/get-reference-trials/', payload)
+  }
 
   fetchClassesByRefCode(refCode) {
     return this._axiosInstance.get(`/user/class/?reference_code=${refCode}`)
