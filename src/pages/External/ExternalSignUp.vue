@@ -116,7 +116,7 @@ watchEffect(() => {
     </v-form>
     <v-form @submit.prevent="register" v-model="isFormValid" v-if="isRefCodeValid">
       <v-text-field v-model="form.fullname" label="Öğrenci Adı" :rules="requiredRule"></v-text-field>
-      <v-text-field v-model="form.parent_fullname" label="Aile Adı Soyadı" :rules="requiredRule"></v-text-field>
+      <v-text-field v-model="form.parent_fullname" label="Veli Adı Soyadı" :rules="requiredRule"></v-text-field>
       <v-text-field v-model="form.email" label="E-posta" :rules="[eitherFieldRule( form.email, form.phone), emailRules].flat()"></v-text-field>
       <v-row>
         <v-col cols="3">

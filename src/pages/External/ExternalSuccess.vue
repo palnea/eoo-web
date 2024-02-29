@@ -20,9 +20,9 @@ defineProps(['title', 'caption']);
           caption
         }}
       </div>
-      <a href='https://me-qr.com/iHZ6BF0i' target='_blank' class="custom-font font-weight-medium" style="margin-bottom: 20px">Funly
+      <a href='https://onelink.to/jp4qj8' target='_blank' class="custom-font font-weight-medium" style="margin-bottom: 20px">Funly
         Family'yi Telefonuna İndir</a>
-      <img src="../../assets/funly-qr.png" width="250">
+      <img src="../../assets/onelink-qr.jpeg" width="250">
     </div>
   </div>
 </template>

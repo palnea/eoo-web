@@ -19,7 +19,7 @@ const authStore = useAuthStore();
 
 const fetchInitialData = async () => {
   try {
-    await authStore.fetchUser()
+    // await authStore.fetchUser()
   } catch (err) {
     consoleWarning("Failed to fetch user.")
   } finally {
