@@ -6,27 +6,6 @@ class ApiService extends BaseService {
     super(baseUrl)
   }
 
-  /**
-   *
-   * @param {Object} payload
-   * @param {string} payload.email
-   * @param {string} payload.password
-   * @returns Promise
-   */
-  login(payload) {
-    return this._axiosInstance.post('auth/login', payload)
-  }
-
-  /**
-   *
-   * @param {Object} payload
-   * @param {string} payload.refresh
-   * @returns Promise
-   */
-  refreshToken(payload) {
-    return this._axiosInstance.post('auth/token/refresh/', payload)
-  }
-
   register(payload) {
     return this._axiosInstance.post('auth/register', payload)
   }
@@ -36,10 +15,6 @@ class ApiService extends BaseService {
 
   fetchClassesByRefCode(refCode) {
     return this._axiosInstance.get(`/user/class/?reference_code=${refCode}`)
-  }
-
-  fetchRefCodes(){
-    return this._axiosInstance.get('/payment/reference-code/')
   }
 }
 
