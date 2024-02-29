@@ -5,10 +5,10 @@ import { errorMessage } from "@/utils/message";
 import { consoleError } from "@/utils/logger";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
 import AppLogo from "@/components/app/AppLogo.vue";
-import { useAuthStore } from '@/store/authStore'
+// import { useAuthStore } from '@/store/authStore'
 import router from "@/router";
 
-const authStore = useAuthStore()
+// const authStore = useAuthStore()
 const loading = ref(false);
 const formState = reactive({
   email: '',
@@ -25,7 +25,7 @@ const loginAttempt = async () => {
     const responseBody = response.data.response_body
     const userRole = responseBody.user.role
     if (userRole === 'student') {
-      authStore.login(responseBody)
+      // authStore.login(responseBody)
       await router.push('dashboard')
     }
   } catch (err) {
