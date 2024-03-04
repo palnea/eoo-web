@@ -4,11 +4,12 @@ import AppLogo from "@/components/app/AppLogo.vue";
 import apiService from "@/services/api.service";
 import { consoleError } from "@/utils/logger";
 import { gradeOptions } from "@/constants/grades";
-import { eitherFieldRule, emailRules, requiredRule } from "@/utils/formValidationRules";
+import { emailRules, phoneRules, requiredRule } from "@/utils/formValidationRules";
 import { filterNullValues, mapClassOptions, } from "@/utils/common";
 import router from "@/router";
 import { phoneCountryCodes } from "@/constants/countryCodes";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
+import LocationSelector from "@/components/common/LocationSelector.vue";
 
 const message = ref("")
 const snackbar = ref(false)
@@ -32,9 +33,6 @@ const isFormValid = ref(false)
 const isRefCodeValid = ref(false)
 const isRefCodeLinkedToSchool = ref(false) // flag to verify ref code and show school name
 const schoolHasClasses = ref(false) // flag to set school's class dropdown or grade predefined options
-const classIdRules = ref([])
-const schoolNameRules = ref([])
-const gradeRules = ref([])
 const loading = ref(false)
 const showPsw = ref(false)
 
@@ -99,15 +97,26 @@ const togglePasswordVisibility = () => {
   showPsw.value = !showPsw.value;
 }
 
-const
-  uppercase = () => {
-    refCodeForm.value.reference_code = refCodeForm.value.reference_code.toUpperCase()
-  }
+const uppercase = () => {
+  refCodeForm.value.reference_code = refCodeForm.value.reference_code.toUpperCase()
+}
+
+const updateDistrictSelection = (value) => {
+  form.value.district_id = value
+};
+
+
+// programmatically enable or disable rules based on School Ref Codes, and School Classes
+const classIdRules = ref([])
+const schoolNameRules = ref([])
+const gradeRules = ref([])
+const districtRules = ref([])
 
 watchEffect(() => {
   classIdRules.value = schoolHasClasses.value ? requiredRule : []
   schoolNameRules.value = !schoolHasClasses.value ? requiredRule : []
   gradeRules.value = !schoolHasClasses.value ? requiredRule : []
+  districtRules.value = !isRefCodeLinkedToSchool.value ? requiredRule : []
 })
 
 </script>
@@ -115,7 +124,7 @@ watchEffect(() => {
 <template>
   <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{ message }}</v-snackbar>
   <BackgroundArt/>
-  <v-container style="width: 90%; max-width: 500px">
+  <v-container style="width: 95%; max-width: 450px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
       <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat;">
@@ -133,20 +142,19 @@ watchEffect(() => {
       <v-text-field v-model="form.fullname" label="Öğrenci Adı" :rules="requiredRule"></v-text-field>
       <v-text-field v-model="form.parent_fullname" label="Veli Adı Soyadı" :rules="requiredRule"></v-text-field>
       <v-text-field v-model="form.email" label="E-posta"
-                    :rules="[eitherFieldRule( form.email, form.phone), emailRules].flat()"></v-text-field>
+                    :rules="[requiredRule, emailRules].flat()"></v-text-field>
       <v-row>
-        <v-col cols="3">
+        <v-col>
           <v-select
             v-model="countryCode"
             :items="phoneCountryCodes"
             label="Kod"
-            outlined
-            solo
+
           ></v-select>
         </v-col>
-        <v-col cols="9">
+        <v-col cols="8">
           <v-text-field v-model="form.phone" label="Telefon"
-                        :rules="eitherFieldRule( form.email, form.phone)"></v-text-field>
+                        :rules="phoneRules(countryCode)" type="number" hide-spin-buttons></v-text-field>
         </v-col>
       </v-row>
       <v-text-field v-model="form.password" label="Şifre" :type="showPsw ? 'text' : 'password'" :rules="requiredRule"
@@ -173,6 +181,8 @@ watchEffect(() => {
         item-value="value"
         :rules="gradeRules"
       ></v-select>
+      <LocationSelector v-if="!isRefCodeLinkedToSchool" :updateDistrictSelection="updateDistrictSelection"
+                        :rules="districtRules"></LocationSelector>
 
       <v-col style="display: flex; justify-content: center">
         <v-btn type="submit" color="primary" :disabled="!isFormValid" :loading="loading">Kaydol</v-btn>
@@ -182,4 +192,7 @@ watchEffect(() => {
 </template>
 
 <style scoped>
+.v-field__input {
+  padding-inline: 2px !important;
+}
 </style>

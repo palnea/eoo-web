@@ -20,6 +20,18 @@ class ApiService extends BaseService {
   fetchClassesByRefCode(refCode) {
     return this._axiosInstance.get(`/user/class/?reference_code=${refCode}`)
   }
+
+  fetchCountries(){
+    return this._axiosInstance.get(`/user/country/`)
+  }
+
+  fetchCities(cityId){
+    return this._axiosInstance.get(`/user/city/?country_id=${cityId}`)
+  }
+
+  fetchDistricts(cityId){
+    return this._axiosInstance.get(`/user/district/?city_id=${cityId}`)
+  }
 }
 
 export default new ApiService()

@@ -91,7 +91,7 @@ watch(tab, () => {
 <template>
   <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{message}}</v-snackbar>
   <BackgroundArt/>
-  <v-container style="width: 90%;max-width: 500px">
+  <v-container style="width: 98%; max-width: 450px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
       <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat">Kayıtlı Kullanıcı için Kod Kullanma</p>
@@ -115,7 +115,7 @@ watch(tab, () => {
       </v-tabs>
       <v-text-field v-if="tab === 1" v-model="form.email" label="E-posta" :rules="[requiredRule, emailRules].flat()"></v-text-field>
       <v-row v-if="tab === 2">
-        <v-col cols="3">
+        <v-col>
           <v-select
             v-model="countryCode"
             :items="phoneCountryCodes"
@@ -124,7 +124,7 @@ watch(tab, () => {
             solo
           ></v-select>
         </v-col>
-        <v-col cols="9">
+        <v-col cols="8">
           <v-text-field v-model="form.phone" label="Telefon" :rules="requiredRule"></v-text-field>
         </v-col>
       </v-row>
