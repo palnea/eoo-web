@@ -21,7 +21,9 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js';
 
 export const phoneRules = (countryCode) => [
   (value) => {
-    if (value == null || value === '') return true;
+    if (value == null || value === '') {
+      return 'Bu alan gereklidir.';
+    }
 
     try {
       const formattedNumber = `${countryCode}${value}`;

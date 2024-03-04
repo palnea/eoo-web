@@ -22,6 +22,7 @@ const form = ref({
   parent_fullname: null,
   email: null,
   get phone() {
+    if (!phoneNumber.value) return null
     return countryCode.value + phoneNumber.value;
   },
   password: null,
