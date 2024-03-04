@@ -14,13 +14,16 @@ import LocationSelector from "@/components/common/LocationSelector.vue";
 const message = ref("")
 const snackbar = ref(false)
 const countryCode = ref(phoneCountryCodes[0].value)
+const phoneNumber = ref(null)
 const classOptions = ref([]);
 const refCodeForm = ref({ reference_code: '' })
 const form = ref({
   fullname: null,
   parent_fullname: null,
   email: null,
-  phone: null,
+  get phone() {
+    return countryCode.value + phoneNumber.value;
+  },
   password: null,
   verify_password: null,
   school_id: null,
@@ -36,10 +39,29 @@ const schoolHasClasses = ref(false) // flag to set school's class dropdown or gr
 const loading = ref(false)
 const showPsw = ref(false)
 
+
+const verifyRefCode = async () => {
+  try {
+    loading.value = true
+    const refCode = refCodeForm.value.reference_code
+    const response = await apiService.verifyRefCode(refCode)
+    isRefCodeValid.value = response.data.response_body.valid
+    if (!isRefCodeValid.value) throw new Error()
+    form.value.reference_code = refCode
+    await getSchoolInfo()
+    await getClasses()
+  } catch (err) {
+    consoleError('Failed to verify ref code: ', err)
+    message.value = "Geçersiz kod. Lütfen geçerli bir kod girin."
+    snackbar.value = true
+  } finally {
+    loading.value = false
+  }
+}
+
 const register = async () => {
   try {
     loading.value = true
-    form.value.phone && (form.value.phone = countryCode.value + form.value.phone);
     form.value.verify_password = form.value.password
     const response = await apiService.register(filterNullValues(form.value))
     console.log("register response: ", response.data.response_body)
@@ -54,8 +76,6 @@ const register = async () => {
     }
     snackbar.value = true
   } finally {
-    // revert phone to original value
-    form.value.phone = form.value.phone.substring(countryCode.value.length);
     loading.value = false
   }
 }
@@ -75,21 +95,17 @@ const getSchoolInfo = async () => {
 }
 
 
-const listClasses = async () => {
+const getClasses = async () => {
   try {
     loading.value = true
     const refCode = refCodeForm.value.reference_code
     const response = await apiService.fetchClassesByRefCode(refCode)
     classOptions.value = mapClassOptions(response.data.response_body)
-    isRefCodeValid.value = true
     if (classOptions.value.length > 0) schoolHasClasses.value = true;
   } catch (err) {
     consoleError('Fetch class by ref code error: ', err)
-    message.value = "Lütfen geçerli bir kod girin."
-    snackbar.value = true
   } finally {
     loading.value = false
-    await getSchoolInfo()
   }
 }
 
@@ -131,7 +147,7 @@ watchEffect(() => {
         Yeni Kullanıcı Kayıt Ekranı</p>
     </v-row>
 
-    <v-form @submit.prevent="listClasses" v-model="isFormValid">
+    <v-form @submit.prevent="verifyRefCode" v-model="isFormValid">
       <v-text-field v-model="refCodeForm.reference_code" label="Referans Kodu" :rules="requiredRule"
                     :disabled="isRefCodeValid" @keyup="uppercase"/>
       <v-col style="display: flex; justify-content: center" v-if="!isRefCodeValid">
@@ -153,7 +169,7 @@ watchEffect(() => {
           ></v-select>
         </v-col>
         <v-col cols="8">
-          <v-text-field v-model="form.phone" label="Telefon"
+          <v-text-field v-model="phoneNumber" label="Telefon"
                         :rules="phoneRules(countryCode)" type="number" hide-spin-buttons></v-text-field>
         </v-col>
       </v-row>
