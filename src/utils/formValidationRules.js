@@ -17,6 +17,22 @@ export const emailRules = [
   },
 ]
 
+import { parsePhoneNumberFromString } from 'libphonenumber-js';
+
+export const phoneRules = (countryCode) => [
+  (value) => {
+    if (value == null || value === '') return true;
+
+    try {
+      const formattedNumber = `${countryCode}${value}`;
+      const phoneNumber = parsePhoneNumberFromString(formattedNumber, countryCode);
+      return phoneNumber && phoneNumber.isValid() || 'Lütfen geçerli bir telefon numarası giriniz.';
+    } catch (error) {
+      return 'Lütfen geçerli bir telefon numarası giriniz.';
+    }
+  },
+];
+
 export const eitherFieldRule = (field1, field2, fieldName1 = "e-posta", fieldName2 = "telefon") => {
   const isField1Filled = !!field1;
   const isField2Filled = !!field2;
