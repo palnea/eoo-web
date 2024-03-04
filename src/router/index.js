@@ -42,7 +42,7 @@ const router = createRouter({
         if (from.name) {
           next();
         } else {
-          next('/external-home');
+          next('/');
         }
       },
     },

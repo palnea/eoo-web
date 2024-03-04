@@ -13,6 +13,10 @@ class ApiService extends BaseService {
     return this._axiosInstance.post('/user/get-reference-trials/', payload)
   }
 
+  fetchSchoolInfoByRefCode(refCode) {
+    return this._axiosInstance.get(`/user/school/by-reference-code/?reference_code=${refCode}`)
+  }
+
   fetchClassesByRefCode(refCode) {
     return this._axiosInstance.get(`/user/class/?reference_code=${refCode}`)
   }

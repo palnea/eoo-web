@@ -30,7 +30,8 @@ const form = ref({
 })
 const isFormValid = ref(false)
 const isRefCodeValid = ref(false)
-const isRefCodeLinkedToSchool = ref(false) // flag to set school's class dropdown or grade predefined options
+const isRefCodeLinkedToSchool = ref(false) // flag to verify ref code and show school name
+const schoolHasClasses = ref(false) // flag to set school's class dropdown or grade predefined options
 const classIdRules = ref([])
 const schoolNameRules = ref([])
 const gradeRules = ref([])
@@ -61,6 +62,21 @@ const register = async () => {
   }
 }
 
+const getSchoolInfo = async () => {
+  try {
+    loading.value = true
+    const refCode = refCodeForm.value.reference_code
+    const response = await apiService.fetchSchoolInfoByRefCode(refCode)
+    form.value.school_name = response.data.response_body.name
+    isRefCodeLinkedToSchool.value = true
+  } catch (err) {
+    consoleError('Fetch school by ref code error: ', err)
+  } finally {
+    loading.value = false
+  }
+}
+
+
 const listClasses = async () => {
   try {
     loading.value = true
@@ -68,15 +84,14 @@ const listClasses = async () => {
     const response = await apiService.fetchClassesByRefCode(refCode)
     classOptions.value = mapClassOptions(response.data.response_body)
     isRefCodeValid.value = true
-    console.log("classOptions.value: ", classOptions.value)
-    if (classOptions.value.length > 0) isRefCodeLinkedToSchool.value = true;
-    form.value.reference_code = refCode
+    if (classOptions.value.length > 0) schoolHasClasses.value = true;
   } catch (err) {
     consoleError('Fetch class by ref code error: ', err)
     message.value = "Lütfen geçerli bir kod girin."
     snackbar.value = true
   } finally {
     loading.value = false
+    await getSchoolInfo()
   }
 }
 
@@ -90,9 +105,9 @@ const
   }
 
 watchEffect(() => {
-  classIdRules.value = isRefCodeLinkedToSchool.value ? requiredRule : []
-  schoolNameRules.value = !isRefCodeLinkedToSchool.value ? requiredRule : []
-  gradeRules.value = !isRefCodeLinkedToSchool.value ? requiredRule : []
+  classIdRules.value = schoolHasClasses.value ? requiredRule : []
+  schoolNameRules.value = !schoolHasClasses.value ? requiredRule : []
+  gradeRules.value = !schoolHasClasses.value ? requiredRule : []
 })
 
 </script>
@@ -117,7 +132,8 @@ watchEffect(() => {
     <v-form @submit.prevent="register" v-model="isFormValid" v-if="isRefCodeValid">
       <v-text-field v-model="form.fullname" label="Öğrenci Adı" :rules="requiredRule"></v-text-field>
       <v-text-field v-model="form.parent_fullname" label="Veli Adı Soyadı" :rules="requiredRule"></v-text-field>
-      <v-text-field v-model="form.email" label="E-posta" :rules="[eitherFieldRule( form.email, form.phone), emailRules].flat()"></v-text-field>
+      <v-text-field v-model="form.email" label="E-posta"
+                    :rules="[eitherFieldRule( form.email, form.phone), emailRules].flat()"></v-text-field>
       <v-row>
         <v-col cols="3">
           <v-select
@@ -129,14 +145,15 @@ watchEffect(() => {
           ></v-select>
         </v-col>
         <v-col cols="9">
-          <v-text-field v-model="form.phone" label="Telefon" :rules="eitherFieldRule( form.email, form.phone)"></v-text-field>
+          <v-text-field v-model="form.phone" label="Telefon"
+                        :rules="eitherFieldRule( form.email, form.phone)"></v-text-field>
         </v-col>
       </v-row>
       <v-text-field v-model="form.password" label="Şifre" :type="showPsw ? 'text' : 'password'" :rules="requiredRule"
                     :append-icon="showPsw ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="togglePasswordVisibility"></v-text-field>
       <v-select
-        v-if="isRefCodeLinkedToSchool"
+        v-if="schoolHasClasses"
         v-model="form.class_id"
         :items="classOptions"
         label="Şube"
@@ -145,10 +162,10 @@ watchEffect(() => {
         :rules="classIdRules"
       ></v-select>
 
-      <v-text-field v-if="!isRefCodeLinkedToSchool" v-model="form.school_name" label="Okul Adı"
-                    :rules="schoolNameRules"></v-text-field>
+      <v-text-field v-model="form.school_name" label="Okul Adı"
+                    :rules="schoolNameRules" :disabled="isRefCodeLinkedToSchool"></v-text-field>
       <v-select
-        v-if="!isRefCodeLinkedToSchool"
+        v-if="!schoolHasClasses"
         v-model="form.grade"
         :items="gradeOptions"
         label="Sınıf"

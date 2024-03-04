@@ -27,6 +27,18 @@ const form = ref({
   reference_code: null
 })
 
+const getSchoolInfo = async () => {
+  try {
+    loading.value = true
+    const refCode = refCodeForm.value.reference_code
+    await apiService.fetchSchoolInfoByRefCode(refCode)
+  } catch (err) {
+    consoleError('Fetch school by ref code error: ', err)
+  } finally {
+    loading.value = false
+  }
+}
+
 const listClasses = async () => {
   try {
     loading.value = true
@@ -43,19 +55,16 @@ const listClasses = async () => {
     snackbar.value = true
   } finally {
     loading.value = false
+    await getSchoolInfo()
   }
 }
 
 const redeem = async () => {
   try {
     loading.value = true
-    const filteredForm = filterNullValues(form.value)
-    if (form.value.phone !== null) {
-      form.value.phone = countryCode.value + form.value.phone
-      form.value.verify_password = form.value.password
-    }
+    form.value.phone && (form.value.phone = countryCode.value + form.value.phone);
 
-    const response = await apiService.redeemCode(filteredForm)
+    const response = await apiService.redeemCode(filterNullValues(form.value))
     console.log("register response: ", response.data.response_body)
     await router.push('success')
   } catch (err) {
@@ -64,7 +73,7 @@ const redeem = async () => {
     snackbar.value = true
   } finally {
     // revert phone to original value -remove country code prefix
-    form.value.phone && (form.value.phone = form.value.phone.substring(countryCode.value.length))
+    form.value.phone = form.value.phone.substring(countryCode.value.length);
     loading.value = false
   }
 }
@@ -77,8 +86,6 @@ watch(tab, () => {
   form.value.email = null
   form.value.phone = null
 })
-
-
 </script>
 
 <template>
