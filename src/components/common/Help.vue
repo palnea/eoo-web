@@ -14,7 +14,7 @@
               </v-col>
               <v-col cols="12">
                 <v-icon color="primary" size="24">mdi-phone-outline</v-icon>
-                <a class="ml-2" href="tel:+905311025560">+90 531 102 55 60</a>
+                <a class="ml-2" href="tel:+905459325560">+90 545 932 55 60</a>
               </v-col>
             </v-row>
           </v-container>
