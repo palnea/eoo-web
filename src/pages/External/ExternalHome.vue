@@ -16,8 +16,7 @@ import Help from "@/components/common/Help.vue";
         Üyelik Oluştur
       </v-btn>
     </v-col>
-    <div style="margin-top: 20px;margin-bottom: 20px; height: 1px; width: 300px; background-color: lightgray"></div>
-    <v-btn @click="() => router.push('redeem-code')" variant="tonal" color="blue" class="no-uppercase">
+    <v-btn @click="() => router.push('redeem-code')" variant="tonal" color="blue" class="no-uppercase mt-6">
       Zaten Üyeyim
     </v-btn>
     <Help/>

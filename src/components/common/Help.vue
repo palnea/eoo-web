@@ -1,5 +1,6 @@
 <template>
-  <v-col class="flex-col-center mt-2">
+  <v-col class="flex-col-center">
+    <div style="margin-top: 20px;margin-bottom: 10px; height: 1px; width: 100px; background-color: lightgray"></div>
     <v-btn variant="flat" color="gray" class="no-uppercase" size="small" @click="showHelpDialog">Yardım</v-btn>
     <v-dialog v-model="dialogVisible" max-width="400">
       <v-card>
