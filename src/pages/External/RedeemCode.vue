@@ -8,6 +8,7 @@ import router from "@/router";
 import { consoleError } from "@/utils/logger";
 import { emailRules, requiredRule } from "@/utils/formValidationRules";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
+import Help from "@/components/common/Help.vue";
 
 const loading = ref(false)
 const message = ref("")
@@ -106,6 +107,7 @@ watch(tab, () => {
 <template>
   <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{message}}</v-snackbar>
   <BackgroundArt/>
+  <v-icon @click="router.push('/')" class="ml-8 mt-10 position-absolute" color="#454545" size="35">mdi-arrow-left</v-icon>
   <v-container style="width: 98%; max-width: 450px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
@@ -157,6 +159,7 @@ watch(tab, () => {
         <v-btn type="submit" color="primary" :disabled="!isFormValid" :loading="loading">Kodu Kullan</v-btn>
       </v-col>
     </v-form>
+    <Help/>
   </v-container>
 </template>
 

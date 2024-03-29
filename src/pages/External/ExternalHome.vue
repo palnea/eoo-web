@@ -3,6 +3,7 @@
 import AppLogo from "@/components/app/AppLogo.vue";
 import router from "@/router";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
+import Help from "@/components/common/Help.vue";
 </script>
 
 <template>
@@ -19,6 +20,7 @@ import BackgroundArt from "@/components/common/BackgroundArt.vue";
     <v-btn @click="() => router.push('redeem-code')" variant="tonal" color="blue" class="no-uppercase">
       Zaten Üyeyim
     </v-btn>
+    <Help/>
   </v-container>
 </template>
 

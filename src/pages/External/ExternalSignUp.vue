@@ -10,6 +10,7 @@ import router from "@/router";
 import { phoneCountryCodes } from "@/constants/countryCodes";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
 import LocationSelector from "@/components/common/LocationSelector.vue";
+import Help from "@/components/common/Help.vue";
 
 const message = ref("")
 const snackbar = ref(false)
@@ -141,6 +142,7 @@ watchEffect(() => {
 <template>
   <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{ message }}</v-snackbar>
   <BackgroundArt/>
+  <v-icon @click="router.push('/')" class="ml-8 mt-10 position-absolute" color="#454545" size="35">mdi-arrow-left</v-icon>
   <v-container style="width: 95%; max-width: 450px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
@@ -205,6 +207,7 @@ watchEffect(() => {
         <v-btn type="submit" color="primary" :disabled="!isFormValid" :loading="loading">Kaydol</v-btn>
       </v-col>
     </v-form>
+    <Help/>
   </v-container>
 </template>
 
