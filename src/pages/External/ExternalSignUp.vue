@@ -12,12 +12,13 @@ import BackgroundArt from "@/components/common/BackgroundArt.vue";
 import LocationSelector from "@/components/common/LocationSelector.vue";
 import Help from "@/components/common/Help.vue";
 
+const queryRefCode = ref(router.currentRoute.value.query.code || '')
 const message = ref("")
 const snackbar = ref(false)
 const countryCode = ref(phoneCountryCodes[0].value)
 const phoneNumber = ref(null)
 const classOptions = ref([]);
-const refCodeForm = ref({ reference_code: '' })
+const refCodeForm = ref({ reference_code: queryRefCode.value })
 const form = ref({
   fullname: null,
   parent_fullname: null,
@@ -136,6 +137,13 @@ watchEffect(() => {
   gradeRules.value = !schoolHasClasses.value ? requiredRule : []
   districtRules.value = !isRefCodeLinkedToSchool.value ? requiredRule : []
 })
+
+watchEffect(() => {
+  refCodeForm.value.reference_code = queryRefCode.value?.toUpperCase();
+  if (queryRefCode.value) {
+    verifyRefCode();
+  }
+});
 
 </script>
 
