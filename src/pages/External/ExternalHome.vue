@@ -3,6 +3,7 @@
 import AppLogo from "@/components/app/AppLogo.vue";
 import router from "@/router";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
+import Help from "@/components/common/Help.vue";
 </script>
 
 <template>
@@ -15,10 +16,10 @@ import BackgroundArt from "@/components/common/BackgroundArt.vue";
         Üyelik Oluştur
       </v-btn>
     </v-col>
-    <div style="margin-top: 20px;margin-bottom: 20px; height: 1px; width: 300px; background-color: lightgray"></div>
-    <v-btn @click="() => router.push('redeem-code')" variant="tonal" color="blue" class="no-uppercase">
+    <v-btn @click="() => router.push('redeem-code')" variant="tonal" color="blue" class="no-uppercase mt-6">
       Zaten Üyeyim
     </v-btn>
+    <Help/>
   </v-container>
 </template>
 
