@@ -4,6 +4,17 @@ import AppLogo from "@/components/app/AppLogo.vue";
 import router from "@/router";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
 import Help from "@/components/common/Help.vue";
+import { ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+
+const queryRefCode = ref(useRoute().query.k || '');
+
+watchEffect(() => {
+  if (queryRefCode.value) {
+    const upperCaseCode = queryRefCode.value.toUpperCase();
+    router.push({ name: 'external-signup', query: { code: upperCaseCode } });
+  }
+});
 </script>
 
 <template>
