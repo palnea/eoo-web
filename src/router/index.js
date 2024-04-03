@@ -25,6 +25,11 @@ const router = createRouter({
       component: ExternalSignUp
     },
     {
+      path: '/r',
+      name: 'external-signup-shorter',
+      component: ExternalSignUp
+    },
+    {
       path: '',
       name: 'external-home',
       component: ExternalHome

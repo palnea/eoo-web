@@ -13,12 +13,13 @@ import LocationSelector from "@/components/common/LocationSelector.vue";
 import Help from "@/components/common/Help.vue";
 
 const queryRefCode = ref(router.currentRoute.value.query.code || '')
+const queryRefCodeShorter = ref(router.currentRoute.value.query.c || '')
 const message = ref("")
 const snackbar = ref(false)
 const countryCode = ref(phoneCountryCodes[0].value)
 const phoneNumber = ref(null)
 const classOptions = ref([]);
-const refCodeForm = ref({ reference_code: queryRefCode.value })
+const refCodeForm = ref({ reference_code: queryRefCode.value || queryRefCodeShorter.value })
 const form = ref({
   fullname: null,
   parent_fullname: null,
@@ -141,6 +142,13 @@ watchEffect(() => {
 watchEffect(() => {
   refCodeForm.value.reference_code = queryRefCode.value?.toUpperCase()
   if (queryRefCode.value) {
+    verifyRefCode()
+  }
+})
+
+watchEffect(() => {
+  refCodeForm.value.reference_code = queryRefCodeShorter.value?.toUpperCase()
+  if (queryRefCodeShorter.value) {
     verifyRefCode()
   }
 })

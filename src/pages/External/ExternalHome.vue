@@ -4,21 +4,7 @@ import AppLogo from "@/components/app/AppLogo.vue";
 import router from "@/router";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
 import Help from "@/components/common/Help.vue";
-import { ref, watchEffect } from "vue";
-import { useRoute } from "vue-router";
 
-const queryRefCode = ref(useRoute().query.k || '');
-
-watchEffect(() => {
-  if (queryRefCode.value) {
-    const queryParameters = { code: queryRefCode.value.toUpperCase() };
-    const queryString = Object.keys(queryParameters)
-      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(queryParameters[key])}`)
-      .join('&');
-
-    window.location.href = `/external-signup?${queryString}`;
-  }
-});
 </script>
 
 <template>
