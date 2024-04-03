@@ -13,12 +13,13 @@ import LocationSelector from "@/components/common/LocationSelector.vue";
 import Help from "@/components/common/Help.vue";
 
 const queryRefCode = ref(router.currentRoute.value.query.code || '')
+const queryRefCodeShorter = ref(router.currentRoute.value.query.c || '')
 const message = ref("")
 const snackbar = ref(false)
 const countryCode = ref(phoneCountryCodes[0].value)
 const phoneNumber = ref(null)
 const classOptions = ref([]);
-const refCodeForm = ref({ reference_code: queryRefCode.value })
+const refCodeForm = ref({ reference_code: queryRefCode.value || queryRefCodeShorter.value })
 const form = ref({
   fullname: null,
   parent_fullname: null,
@@ -139,20 +140,26 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-  refCodeForm.value.reference_code = queryRefCode.value?.toUpperCase();
+  refCodeForm.value.reference_code = queryRefCode.value?.toUpperCase()
   if (queryRefCode.value) {
-    setTimeout(() => {
-      verifyRefCode()
-    }, 500)
+    verifyRefCode()
   }
-});
+})
+
+watchEffect(() => {
+  refCodeForm.value.reference_code = queryRefCodeShorter.value?.toUpperCase()
+  if (queryRefCodeShorter.value) {
+    verifyRefCode()
+  }
+})
 
 </script>
 
 <template>
   <v-snackbar v-model="snackbar" color="#F5C461" timeout="5000" style="color: blue">{{ message }}</v-snackbar>
   <BackgroundArt/>
-  <v-icon @click="router.push('/')" class="ml-8 mt-10 position-absolute" color="#454545" size="35">mdi-arrow-left</v-icon>
+  <v-icon @click="router.push('/')" class="ml-8 mt-10 position-absolute" color="#454545" size="35">mdi-arrow-left
+  </v-icon>
   <v-container style="width: 95%; max-width: 450px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <AppLogo :width="100"></AppLogo>
