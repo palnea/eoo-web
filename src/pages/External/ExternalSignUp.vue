@@ -141,7 +141,9 @@ watchEffect(() => {
 watchEffect(() => {
   refCodeForm.value.reference_code = queryRefCode.value?.toUpperCase();
   if (queryRefCode.value) {
-    verifyRefCode();
+    setTimeout(() => {
+      verifyRefCode()
+    }, 500)
   }
 });
 
