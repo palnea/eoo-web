@@ -11,8 +11,12 @@ const queryRefCode = ref(useRoute().query.k || '');
 
 watchEffect(() => {
   if (queryRefCode.value) {
-    const upperCaseCode = queryRefCode.value.toUpperCase();
-    router.push({ name: 'external-signup', query: { code: upperCaseCode } });
+    const queryParameters = { code: queryRefCode.value.toUpperCase() };
+    const queryString = Object.keys(queryParameters)
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(queryParameters[key])}`)
+      .join('&');
+
+    window.location.href = `/external-signup?${queryString}`;
   }
 });
 </script>
