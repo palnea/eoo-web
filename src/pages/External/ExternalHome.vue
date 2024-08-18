@@ -9,7 +9,7 @@ import Help from "@/components/common/Help.vue";
 
 <template>
   <BackgroundArt/>
-  <v-container style="width: 90%; display: flex; flex-direction: column; align-items: center">
+  <v-container style="width: 90%; display: flex; flex-direction: column; align-items: center; margin-top: 10rem">
     <AppLogo/>
     <v-col cols="auto" style="margin-top: 50px">
       <v-btn @click="() => router.push('external-signup')" size="large" variant="elevated" color="blue"

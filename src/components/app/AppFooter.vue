@@ -7,7 +7,7 @@
     <v-row>
         <v-col class="text-center flex-row-center justify-center custom-font  font-weight-thin" cols="12">
           <!--              <v-icon class="mr-2" color="#c7c7c7">mdi-copyright</v-icon>-->
-          <img src="../../assets/logo.webp" width="60" style="margin-right: 8px; opacity: 0.7">
+          <img src="../../assets/logo-white-bg.png" width="60" style="margin-right: 8px; opacity: 0.7">
           {{ "|" }} &nbsp; {{ new Date().getFullYear() }} &nbsp;
         </v-col>
     </v-row>
