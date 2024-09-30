@@ -1,7 +1,7 @@
 <template>
   <v-col class="flex-col-center mt-10">
     <v-btn icon elevation="1" color="blue" class="no-uppercase" size="large" @click="showHelpDialog"
-    style="position: absolute; top: 4em;right: 4em">
+    style="position: absolute; top: 1em;right: 1em">
       <v-icon>mdi-information-outline</v-icon>
     </v-btn>
     <v-dialog v-model="dialogVisible" max-width="400">

@@ -163,10 +163,10 @@ watchEffect(() => {
   </v-icon>
   <v-container style="width: 95%; max-width: 450px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
-      <div class="flex-row-center">
+      <div class="flex-row-center-custom">
         <AppLogo :width="150"></AppLogo>
         <span class="ml-3" style="color: gray; font-size: 20px">x</span>
-        <DigiturkLogo :width="200"></DigiturkLogo>
+        <DigiturkLogo :width="165"></DigiturkLogo>
       </div>
 
       <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat;">
@@ -238,4 +238,21 @@ watchEffect(() => {
 .v-field__input {
   padding-inline: 2px !important;
 }
+.flex-row-center-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .flex-row-center-custom {
+    flex-direction: column; /* Stack items vertically on small screens */
+    text-align: center;     /* Center text horizontally */
+  }
+
+  .flex-row-center-custom span {
+    margin-left: 0; /* Remove left margin for smaller screens */
+  }
+}
+
 </style>
