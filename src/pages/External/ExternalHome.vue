@@ -20,6 +20,10 @@ import Help from "@/components/common/Help.vue";
     <v-btn @click="() => router.push('redeem-code')" variant="tonal" color="blue" class="no-uppercase mt-6">
       Zaten Üyeyim
     </v-btn>
+    <div style="margin-top: 40px;margin-bottom: 10px; height: 1px; width: 100px; background-color: lightgray"></div>
+    <v-btn @click="() => router.push('external-signup-digiturk')" color="#5C2C91" class="no-uppercase mt-6">
+      Digiturk Müşterisiyim
+    </v-btn>
     <Help/>
   </v-container>
 </template>

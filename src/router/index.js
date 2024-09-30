@@ -10,6 +10,7 @@ import NotFound from "@/pages/NotFound.vue";
 import ExternalHome from "@/pages/External/ExternalHome.vue";
 import ExternalSuccess from "@/pages/External/ExternalSuccess.vue";
 import RedeemCode from "@/pages/External/RedeemCode.vue";
+import ExternalSignUpDigiturk from "@/pages/External/ExternalSignUpDigiturk.vue";
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -23,6 +24,11 @@ const router = createRouter({
       path: '/external-signup',
       name: 'external-signup',
       component: ExternalSignUp
+    },
+    {
+      path: '/external-signup-digiturk',
+      name: 'external-signup-digiturk',
+      component: ExternalSignUpDigiturk
     },
     {
       path: '/r',
