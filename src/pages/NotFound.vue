@@ -12,7 +12,7 @@
         size="64"
       ></v-icon>
 
-      <div class="text-h4 custom-font"> Sayfa Buulunamadı. </div>
+      <div class="text-h4 custom-font"> Sayfa Bulunamadı. </div>
       <v-divider style="width: 300px; margin: 20px auto"></v-divider>
     </div>
   </div>
