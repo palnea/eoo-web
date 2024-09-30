@@ -1,10 +1,12 @@
 <template>
-  <v-col class="flex-col-center">
-    <div style="margin-top: 20px;margin-bottom: 10px; height: 1px; width: 100px; background-color: lightgray"></div>
-    <v-btn variant="flat" color="gray" class="no-uppercase" size="small" @click="showHelpDialog">Yardım</v-btn>
+  <v-col class="flex-col-center mt-10">
+    <v-btn icon elevation="1" color="blue" class="no-uppercase" size="large" @click="showHelpDialog"
+    style="position: absolute; top: 4em;right: 4em">
+      <v-icon>mdi-information-outline</v-icon>
+    </v-btn>
     <v-dialog v-model="dialogVisible" max-width="400">
       <v-card>
-        <v-card-title class="text-h6">İletişime Geçin</v-card-title>
+        <v-card-title class="text-h6" style="background-color: white;color: #2096F3">İletişime Geçin</v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
