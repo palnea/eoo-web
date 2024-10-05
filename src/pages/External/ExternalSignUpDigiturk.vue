@@ -165,7 +165,7 @@ watchEffect(() => {
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
       <div class="flex-row-center-custom">
         <AppLogo :width="150"></AppLogo>
-        <span class="ml-3" style="color: gray; font-size: 20px">x</span>
+        <span class="ml-3" style="color: gray; font-size: 20px"></span>
         <DigiturkLogo :width="165"></DigiturkLogo>
       </div>
 
