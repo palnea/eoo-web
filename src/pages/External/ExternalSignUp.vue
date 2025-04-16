@@ -172,7 +172,7 @@ watchEffect(() => {
     </v-row>
 
     <v-form @submit.prevent="verifyRefCode" v-model="isFormValid">
-      <v-text-field v-model="refCodeForm.reference_code" label="Referanss Kodu" :rules="requiredRule"
+      <v-text-field v-model="refCodeForm.reference_code" label="Referans Kodu" :rules="requiredRule"
                     :disabled="isRefCodeValid" @keyup="uppercase"/>
       <v-col style="display: flex; justify-content: center" v-if="!isRefCodeValid">
         <v-btn type="submit" color="primary" :disabled="!isFormValid" :loading="loading">Kodu Doğrula</v-btn>
