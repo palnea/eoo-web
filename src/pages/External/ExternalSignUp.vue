@@ -34,7 +34,8 @@ const form = ref({
   class_id: classOptions.value[0]?.value || null,
   grade: null,
   school_name: null,
-  reference_code: null
+  reference_code: null,
+  kvkkAccepted: false
 })
 const isFormValid = ref(false)
 const isRefCodeValid = ref(false)
@@ -43,6 +44,9 @@ const schoolHasClasses = ref(false) // flag to set school's class dropdown or gr
 const loading = ref(false)
 const showPsw = ref(false)
 
+const kvkkRules = [
+  value => !!value || 'Gizlilik politikasını kabul etmeniz gerekmektedir.'
+]
 
 const verifyRefCode = async () => {
   try {
@@ -98,7 +102,6 @@ const getSchoolInfo = async () => {
   }
 }
 
-
 const getClasses = async () => {
   try {
     loading.value = true
@@ -118,12 +121,13 @@ const togglePasswordVisibility = () => {
 }
 
 const uppercase = () => {
-  refCodeForm.value.reference_code = refCodeForm.value.reference_code.toUpperCase()
+  refCodeForm.value.reference_code = refCodeForm.value.reference_code.toLocaleUpperCase('tr-TR')
 }
 
 const updateDistrictSelection = (value) => {
   form.value.district_id = value
 };
+
 
 
 // programmatically enable or disable rules based on School Ref Codes, and School Classes
@@ -140,14 +144,14 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-  refCodeForm.value.reference_code = queryRefCode.value?.toUpperCase()
+  refCodeForm.value.reference_code = queryRefCode.value?.toLocaleUpperCase('tr-TR')
   if (queryRefCode.value) {
     verifyRefCode()
   }
 })
 
 watchEffect(() => {
-  refCodeForm.value.reference_code = queryRefCodeShorter.value?.toUpperCase()
+  refCodeForm.value.reference_code = queryRefCodeShorter.value?.toLocaleUpperCase('tr-TR')
   if (queryRefCodeShorter.value) {
     verifyRefCode()
   }
@@ -168,7 +172,7 @@ watchEffect(() => {
     </v-row>
 
     <v-form @submit.prevent="verifyRefCode" v-model="isFormValid">
-      <v-text-field v-model="refCodeForm.reference_code" label="Referans Kodu" :rules="requiredRule"
+      <v-text-field v-model="refCodeForm.reference_code" label="Referanss Kodu" :rules="requiredRule"
                     :disabled="isRefCodeValid" @keyup="uppercase"/>
       <v-col style="display: flex; justify-content: center" v-if="!isRefCodeValid">
         <v-btn type="submit" color="primary" :disabled="!isFormValid" :loading="loading">Kodu Doğrula</v-btn>
@@ -220,12 +224,29 @@ watchEffect(() => {
       <LocationSelector v-if="!isRefCodeLinkedToSchool" :updateDistrictSelection="updateDistrictSelection"
                         :rules="districtRules"></LocationSelector>
 
+      <v-checkbox
+        v-model="form.kvkkAccepted"
+        :rules="kvkkRules"
+        color="primary"
+        required
+      >
+        <template v-slot:label>
+          <div>
+            <span>Kişisel verilerin korunması hakkındaki </span>
+            <a href="https://funlygames.com/gizlilik-politikamiz" target="_blank" class="text-decoration-underline">gizlilik politikasını</a>
+            <span> okudum ve kabul ediyorum.</span>
+          </div>
+        </template>
+      </v-checkbox>
+
       <v-col style="display: flex; justify-content: center">
         <v-btn type="submit" color="primary" :disabled="!isFormValid" :loading="loading">Kaydol</v-btn>
       </v-col>
     </v-form>
     <Help/>
   </v-container>
+
+
 </template>
 
 <style scoped>
