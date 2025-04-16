@@ -85,8 +85,8 @@ const loadCities = async () => {
 
     // Move preferred cities to the top
     citiesData.sort((a, b) => {
-      const aIndex = preferredCities.indexOf(a.name.toUpperCase());
-      const bIndex = preferredCities.indexOf(b.name.toUpperCase());
+      const aIndex = preferredCities.indexOf(a.name.toLocaleUpperCase('tr-TR'));
+      const bIndex = preferredCities.indexOf(b.name.toLocaleUpperCase('tr-TR'));
 
       // If both cities are preferred or not preferred, use alphabetical order
       if (aIndex !== -1 && bIndex !== -1) {

@@ -95,7 +95,7 @@ const redeem = async () => {
 }
 
 const uppercase = () => {
-  refCodeForm.value.reference_code = refCodeForm.value.reference_code.toUpperCase()
+  refCodeForm.value.reference_code = refCodeForm.value.reference_code.toLocaleUpperCase('tr-TR')
 }
 
 watch(tab, () => {

@@ -35,7 +35,8 @@ const form = ref({
   class_id: classOptions.value[0]?.value || null,
   grade: null,
   school_name: null,
-  reference_code: null
+  reference_code: null,
+  kvkkAccepted: false
 })
 const isFormValid = ref(false)
 const isRefCodeValid = ref(false)
@@ -44,6 +45,9 @@ const schoolHasClasses = ref(false) // flag to set school's class dropdown or gr
 const loading = ref(false)
 const showPsw = ref(false)
 
+const kvkkRules = [
+  value => !!value || 'Gizlilik politikasını kabul etmeniz gerekmektedir.'
+]
 
 const verifyRefCode = async () => {
   try {
@@ -119,7 +123,7 @@ const togglePasswordVisibility = () => {
 }
 
 const uppercase = () => {
-  refCodeForm.value.reference_code = refCodeForm.value.reference_code.toUpperCase()
+  refCodeForm.value.reference_code = refCodeForm.value.reference_code.toLocaleUpperCase('tr-TR')
 }
 
 const updateDistrictSelection = (value) => {
@@ -141,14 +145,14 @@ watchEffect(() => {
 })
 
 watchEffect(() => {
-  refCodeForm.value.reference_code = queryRefCode.value?.toUpperCase()
+  refCodeForm.value.reference_code = queryRefCode.value?.toLocaleUpperCase('tr-TR')
   if (queryRefCode.value) {
     verifyRefCode()
   }
 })
 
 watchEffect(() => {
-  refCodeForm.value.reference_code = queryRefCodeShorter.value?.toUpperCase()
+  refCodeForm.value.reference_code = queryRefCodeShorter.value?.toLocaleUpperCase('tr-TR')
   if (queryRefCodeShorter.value) {
     verifyRefCode()
   }
@@ -225,6 +229,21 @@ watchEffect(() => {
       ></v-select>
       <LocationSelector v-if="!isRefCodeLinkedToSchool" :updateDistrictSelection="updateDistrictSelection"
                         :rules="districtRules"></LocationSelector>
+
+      <v-checkbox
+        v-model="form.kvkkAccepted"
+        :rules="kvkkRules"
+        color="#5C2C91"
+        required
+      >
+        <template v-slot:label>
+          <div>
+            <span>Kişisel verilerin korunması hakkındaki </span>
+            <a href="https://funlygames.com/gizlilik-politikamiz" target="_blank" class="text-decoration-underline">gizlilik politikasını</a>
+            <span> okudum ve kabul ediyorum.</span>
+          </div>
+        </template>
+      </v-checkbox>
 
       <v-col style="display: flex; justify-content: center">
         <v-btn type="submit" color="#5C2C91" :disabled="!isFormValid" :loading="loading">Kaydol</v-btn>
