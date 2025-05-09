@@ -11,6 +11,7 @@ import ExternalHome from "@/pages/External/ExternalHome.vue";
 import ExternalSuccess from "@/pages/External/ExternalSuccess.vue";
 import RedeemCode from "@/pages/External/RedeemCode.vue";
 import ExternalSignUpDigiturk from "@/pages/External/ExternalSignUpDigiturk.vue";
+import ExternalSignUpOkyanus from "@/pages/External/ExternalSignUpOkyanus.vue";
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -29,6 +30,11 @@ const router = createRouter({
       path: '/external-signup-digiturk',
       name: 'external-signup-digiturk',
       component: ExternalSignUpDigiturk
+    },
+    {
+      path: '/external-signup-okyanus',
+      name: 'external-signup-okyanus',
+      component: ExternalSignUpOkyanus
     },
     {
       path: '/r',

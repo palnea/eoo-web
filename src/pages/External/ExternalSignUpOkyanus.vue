@@ -11,6 +11,7 @@ import { phoneCountryCodes } from "@/constants/countryCodes";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
 import LocationSelector from "@/components/common/LocationSelector.vue";
 import Help from "@/components/common/Help.vue";
+import OkyanusLogo from "@/components/app/OkyanusLogo.vue";
 
 const queryRefCode = ref(router.currentRoute.value.query.code || '')
 const queryRefCodeShorter = ref(router.currentRoute.value.query.c || '')
@@ -102,6 +103,7 @@ const getSchoolInfo = async () => {
   }
 }
 
+
 const getClasses = async () => {
   try {
     loading.value = true
@@ -127,7 +129,6 @@ const uppercase = () => {
 const updateDistrictSelection = (value) => {
   form.value.district_id = value
 };
-
 
 
 // programmatically enable or disable rules based on School Ref Codes, and School Classes
@@ -166,7 +167,12 @@ watchEffect(() => {
   </v-icon>
   <v-container style="width: 95%; max-width: 450px">
     <v-row style="min-width: fit-content; display: flex; flex-direction: column; align-items: center; padding: 16px">
-      <AppLogo :width="100"></AppLogo>
+      <div class="flex-row-center-custom">
+        <AppLogo :width="150"></AppLogo>
+        <span class="ml-3" style="color: gray; font-size: 20px"></span>
+        <OkyanusLogo :width="165"></OkyanusLogo>
+      </div>
+
       <p class="text-h5 font-weight-medium" style="text-align: center; margin: 5px 0 20px 0; font-family: Montserrat;">
         Yeni Kullanıcı Kayıt Ekranı</p>
     </v-row>
@@ -175,7 +181,7 @@ watchEffect(() => {
       <v-text-field v-model="refCodeForm.reference_code" label="Referans Kodu" :rules="requiredRule"
                     :disabled="isRefCodeValid" @keyup="uppercase"/>
       <v-col style="display: flex; justify-content: center" v-if="!isRefCodeValid">
-        <v-btn type="submit" color="primary" :disabled="!isFormValid" :loading="loading">Kodu Doğrula</v-btn>
+        <v-btn type="submit" color="#147BAE" :disabled="!isFormValid" :loading="loading">Kodu Doğrula</v-btn>
       </v-col>
     </v-form>
     <v-form @submit.prevent="register" v-model="isFormValid" v-if="isRefCodeValid">
@@ -227,7 +233,7 @@ watchEffect(() => {
       <v-checkbox
         v-model="form.kvkkAccepted"
         :rules="kvkkRules"
-        color="primary"
+        color="#147BAE"
         required
       >
         <template v-slot:label>
@@ -240,17 +246,32 @@ watchEffect(() => {
       </v-checkbox>
 
       <v-col style="display: flex; justify-content: center">
-        <v-btn type="submit" color="primary" :disabled="!isFormValid" :loading="loading">Kaydol</v-btn>
+        <v-btn type="submit" color="#147BAE" :disabled="!isFormValid" :loading="loading">Kaydol</v-btn>
       </v-col>
     </v-form>
     <Help/>
   </v-container>
-
-
 </template>
 
 <style scoped>
 .v-field__input {
   padding-inline: 2px !important;
 }
+.flex-row-center-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .flex-row-center-custom {
+    flex-direction: column; /* Stack items vertically on small screens */
+    text-align: center;     /* Center text horizontally */
+  }
+
+  .flex-row-center-custom span {
+    margin-left: 0; /* Remove left margin for smaller screens */
+  }
+}
+
 </style>
