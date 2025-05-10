@@ -24,9 +24,9 @@ import Help from "@/components/common/Help.vue";
     <v-btn @click="() => router.push('external-signup-digiturk')" color="#5C2C91" class="no-uppercase mt-6">
       Digiturk Kodu
     </v-btn>
-    <v-btn @click="() => router.push('external-signup-okyanus')" color="#147BAE" class="no-uppercase mt-6">
-      Okyanus Kolejleri Kodu
-    </v-btn>
+<!--    <v-btn @click="() => router.push('external-signup-okyanus')" color="#147BAE" class="no-uppercase mt-6">-->
+<!--      Okyanus Kolejleri Kodu-->
+<!--    </v-btn>-->
     <Help/>
   </v-container>
 </template>
