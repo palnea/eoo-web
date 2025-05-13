@@ -21,12 +21,19 @@ import Help from "@/components/common/Help.vue";
       Zaten Üyeyim
     </v-btn>
     <div style="margin-top: 40px;margin-bottom: 10px; height: 1px; width: 100px; background-color: lightgray"></div>
-    <v-btn @click="() => router.push('external-signup-digiturk')" color="#5C2C91" class="no-uppercase mt-6">
-      Digiturk Kodu
-    </v-btn>
-<!--    <v-btn @click="() => router.push('external-signup-okyanus')" color="#147BAE" class="no-uppercase mt-6">-->
-<!--      Okyanus Kolejleri Kodu-->
-<!--    </v-btn>-->
+    <v-row class="mt-6" justify="center" style="gap: 16px">
+      <v-col cols="auto">
+        <v-btn @click="() => router.push('external-signup-digiturk')" color="#5C2C91" class="no-uppercase">
+          Digiturk Kodu
+        </v-btn>
+      </v-col>
+      <v-col cols="auto">
+        <v-btn @click="() => router.push('external-signup-okyanus')" color="#147BAE" class="no-uppercase">
+          Okyanus Koleji Kodu
+        </v-btn>
+      </v-col>
+    </v-row>
+
     <Help/>
   </v-container>
 </template>
