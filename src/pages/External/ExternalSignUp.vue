@@ -35,7 +35,8 @@ const form = ref({
   grade: null,
   school_name: null,
   reference_code: null,
-  kvkkAccepted: false
+  kvkkAccepted: false,
+  kvkk2Accepted: false,
 })
 const isFormValid = ref(false)
 const isRefCodeValid = ref(false)
@@ -46,6 +47,10 @@ const showPsw = ref(false)
 
 const kvkkRules = [
   value => !!value || 'Gizlilik politikasını kabul etmeniz gerekmektedir.'
+]
+
+const kvkk2Rules = [
+  value => !!value || 'Aydınlatma metnini kabul etmeniz gerekmektedir.'
 ]
 
 const verifyRefCode = async () => {
@@ -234,6 +239,20 @@ watchEffect(() => {
           <div>
             <span>Kişisel verilerin korunması hakkındaki </span>
             <a href="https://funlygames.com/gizlilik-politikamiz" target="_blank" class="text-decoration-underline">gizlilik politikasını</a>
+            <span> okudum ve kabul ediyorum.</span>
+          </div>
+        </template>
+      </v-checkbox>
+
+      <v-checkbox
+        v-model="form.kvkk2Accepted"
+        :rules="kvkk2Rules"
+        color="primary"
+        required
+      >
+        <template v-slot:label>
+          <div>
+            <a href="https://funlygames.com/ayd%C4%B1nlatma-metni" target="_blank" class="text-decoration-underline">Aydınlatma metnini</a>
             <span> okudum ve kabul ediyorum.</span>
           </div>
         </template>
