@@ -25,3 +25,12 @@ export const mapClassOptions = (data) => {
     };
   });
 }
+
+export const mapFieldOptions = (data) => {
+  return data.map(({ key, value }) => {
+    return {
+      title: value,
+      value: key
+    };
+  });
+}
