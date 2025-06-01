@@ -3,9 +3,8 @@ import { ref, watchEffect } from 'vue';
 import AppLogo from "@/components/app/AppLogo.vue";
 import apiService from "@/services/api.service";
 import { consoleError } from "@/utils/logger";
-import { gradeOptions } from "@/constants/grades";
 import { emailRules, phoneRules, requiredRule } from "@/utils/formValidationRules";
-import { filterNullValues, mapClassOptions, } from "@/utils/common";
+import { filterNullValues, mapClassOptions, mapFieldOptions } from "@/utils/common";
 import router from "@/router";
 import { phoneCountryCodes } from "@/constants/countryCodes";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
@@ -20,6 +19,7 @@ const snackbar = ref(false)
 const countryCode = ref(phoneCountryCodes[0].value)
 const phoneNumber = ref(null)
 const classOptions = ref([]);
+const gradeOptions = ref([]);
 const refCodeForm = ref({ reference_code: queryRefCode.value || queryRefCodeShorter.value })
 const form = ref({
   fullname: null,
@@ -64,6 +64,7 @@ const verifyRefCode = async () => {
     form.value.reference_code = refCode
     await getSchoolInfo()
     await getClasses()
+    await getGradeOptions()
   } catch (err) {
     consoleError('Failed to verify ref code: ', err)
     message.value = "Geçersiz kod. Lütfen geçerli bir kod girin."
@@ -108,7 +109,6 @@ const getSchoolInfo = async () => {
   }
 }
 
-
 const getClasses = async () => {
   try {
     loading.value = true
@@ -118,6 +118,19 @@ const getClasses = async () => {
     if (classOptions.value.length > 0) schoolHasClasses.value = true;
   } catch (err) {
     consoleError('Fetch class by ref code error: ', err)
+  } finally {
+    loading.value = false
+  }
+}
+
+const getGradeOptions = async () => {
+  try {
+    loading.value = true
+    const refCode = refCodeForm.value.reference_code
+    const response = await apiService.fetchFieldOptions(refCode, 'grade')
+    gradeOptions.value = mapFieldOptions(response.data.response_body.options)
+  } catch (err) {
+    consoleError('Fetch grade options error: ', err)
   } finally {
     loading.value = false
   }

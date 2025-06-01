@@ -36,6 +36,10 @@ class ApiService extends BaseService {
   fetchDistricts(cityId){
     return this._axiosInstance.get(`/user/district/?city_id=${cityId}`)
   }
+
+  fetchFieldOptions(refCode, fieldName) {
+    return this._axiosInstance.get(`/payment/reference-code/get-field-options/?reference_code=${refCode}&field_name=${fieldName}`)
+  }
 }
 
 export default new ApiService()
