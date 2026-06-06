@@ -3,8 +3,9 @@ import { ref, watchEffect } from 'vue';
 import AppLogo from "@/components/app/AppLogo.vue";
 import apiService from "@/services/api.service";
 import { consoleError } from "@/utils/logger";
+import { gradeOptions as defaultGradeOptions } from "@/constants/grades";
 import { emailRules, phoneRules, requiredRule } from "@/utils/formValidationRules";
-import { filterNullValues, mapClassOptions, mapFieldOptions } from "@/utils/common";
+import { filterNullValues, mapClassOptions } from "@/utils/common";
 import router from "@/router";
 import { phoneCountryCodes } from "@/constants/countryCodes";
 import BackgroundArt from "@/components/common/BackgroundArt.vue";
@@ -20,6 +21,7 @@ const countryCode = ref(phoneCountryCodes[0].value)
 const phoneNumber = ref(null)
 const classOptions = ref([]);
 const gradeOptions = ref([]);
+const requiredFields = ref(null);
 const refCodeForm = ref({ reference_code: queryRefCode.value || queryRefCodeShorter.value })
 const form = ref({
   fullname: null,
@@ -54,17 +56,63 @@ const kvkk2Rules = [
   value => !!value || 'Aydınlatma metnini kabul etmeniz gerekmektedir.'
 ]
 
+const hasValue = (value) => value !== null && value !== undefined && value !== ''
+
+const fallbackGradeOptions = defaultGradeOptions.filter(({ value }) => Number(value) >= 1)
+
+const getFallbackGradeOptions = () => fallbackGradeOptions.map(option => ({ ...option }))
+
+const isUsableOption = ({ title, value } = {}) => hasValue(value) && String(title || '').trim() !== ''
+
+const isUsableClass = ({ id, year_zero, branch } = {}) => {
+  return hasValue(id) && hasValue(year_zero) && String(branch || '').trim() !== ''
+}
+
+const getFieldConfig = (fieldName) => {
+  return requiredFields.value?.find(field => field.field_name === fieldName)
+}
+
+const isFieldRequired = (fieldName, fallback) => {
+  const fieldConfig = getFieldConfig(fieldName)
+  return fallback || fieldConfig?.is_required === true
+}
+
+const normalizeClassAndGradePayload = () => {
+  if (schoolHasClasses.value) {
+    form.value.grade = null
+    return
+  }
+
+  form.value.class_id = null
+}
+
+const resetSchoolSelectionState = () => {
+  classOptions.value = []
+  gradeOptions.value = []
+  requiredFields.value = null
+  isRefCodeValid.value = false
+  isRefCodeLinkedToSchool.value = false
+  schoolHasClasses.value = false
+  form.value.class_id = null
+  form.value.grade = null
+  form.value.school_name = null
+  form.value.reference_code = null
+  form.value.district_id = null
+}
+
 const verifyRefCode = async () => {
   try {
     loading.value = true
     const refCode = refCodeForm.value.reference_code
+    resetSchoolSelectionState()
     const response = await apiService.verifyRefCode(refCode)
-    isRefCodeValid.value = response.data.response_body.valid
+    const responseBody = response.data.response_body
+    isRefCodeValid.value = responseBody.valid
+    requiredFields.value = Array.isArray(responseBody.required_fields) ? responseBody.required_fields : null
     if (!isRefCodeValid.value) throw new Error()
     form.value.reference_code = refCode
     await getSchoolInfo()
     await getClasses()
-    await getGradeOptions()
   } catch (err) {
     consoleError('Failed to verify ref code: ', err)
     message.value = "Geçersiz kod. Lütfen geçerli bir kod girin."
@@ -78,6 +126,7 @@ const register = async () => {
   try {
     loading.value = true
     form.value.verify_password = form.value.password
+    normalizeClassAndGradePayload()
     const response = await apiService.register(filterNullValues(form.value))
     console.log("register response: ", response.data.response_body)
     await router.push('success')
@@ -114,23 +163,19 @@ const getClasses = async () => {
     loading.value = true
     const refCode = refCodeForm.value.reference_code
     const response = await apiService.fetchClassesByRefCode(refCode)
-    classOptions.value = mapClassOptions(response.data.response_body)
-    if (classOptions.value.length > 0) schoolHasClasses.value = true;
+    const classes = Array.isArray(response.data.response_body) ? response.data.response_body : []
+    classOptions.value = mapClassOptions(classes.filter(isUsableClass)).filter(isUsableOption)
+    schoolHasClasses.value = classOptions.value.length > 0
+    if (!schoolHasClasses.value) {
+      gradeOptions.value = getFallbackGradeOptions()
+    }
+    normalizeClassAndGradePayload()
   } catch (err) {
     consoleError('Fetch class by ref code error: ', err)
-  } finally {
-    loading.value = false
-  }
-}
-
-const getGradeOptions = async () => {
-  try {
-    loading.value = true
-    const refCode = refCodeForm.value.reference_code
-    const response = await apiService.fetchFieldOptions(refCode, 'grade')
-    gradeOptions.value = mapFieldOptions(response.data.response_body.options)
-  } catch (err) {
-    consoleError('Fetch grade options error: ', err)
+    classOptions.value = []
+    schoolHasClasses.value = false
+    gradeOptions.value = getFallbackGradeOptions()
+    normalizeClassAndGradePayload()
   } finally {
     loading.value = false
   }
@@ -157,9 +202,9 @@ const districtRules = ref([])
 
 watchEffect(() => {
   classIdRules.value = schoolHasClasses.value ? requiredRule : []
-  schoolNameRules.value = !schoolHasClasses.value ? requiredRule : []
-  gradeRules.value = !schoolHasClasses.value ? requiredRule : []
-  districtRules.value = !isRefCodeLinkedToSchool.value ? requiredRule : []
+  schoolNameRules.value = isFieldRequired('school_name', !schoolHasClasses.value) ? requiredRule : []
+  gradeRules.value = !schoolHasClasses.value && isFieldRequired('grade', true) ? requiredRule : []
+  districtRules.value = isFieldRequired('district_id', !isRefCodeLinkedToSchool.value) ? requiredRule : []
 })
 
 watchEffect(() => {
