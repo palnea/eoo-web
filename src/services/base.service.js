@@ -26,9 +26,9 @@ export default class BaseService {
   }
 
   async responseErrorInterceptor(error) {
-    const originalRequest = error.config
+    const originalRequest = error?.config
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error?.response?.status === 401 && originalRequest && !originalRequest._retry) {
       originalRequest._retry = true
       return this._axiosInstance(originalRequest)
     }
